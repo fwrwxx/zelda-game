@@ -6,6 +6,7 @@ k.loadSprite("assets", "./assets/topdownasset.png", {
   sliceY: 31,
   anims: {
     "player-idle-down": 936,
+    "slime-idle-down": 858,
   },
 });
 

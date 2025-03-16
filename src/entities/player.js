@@ -1,4 +1,4 @@
-export function generatePlayerComponents(pos) {
+export function generatePlayerComponents(k, pos) {
   return [
     k.sprite("assets", {
       anims: "player-idle-down",
