@@ -1,3 +1,4 @@
+import { generatePlayerComponents } from "../entities/player.js";
 import { colorizeBackground, drawTiles, fetchMapData } from "../utils.js";
 
 export default async function world(k) {
@@ -15,6 +16,12 @@ export default async function world(k) {
   const layers = mapData.layers;
   for (const layer of layers) {
     if (layer.name === "boundaries") {
+      for (const object of layer.objects) {
+        if (object.name === "player") {
+          entities.player = k.add(generatePlayerComponents(k, k.vec2(object.x, object.y)));
+          continue;
+        }
+      }
       continue;
     }
 
@@ -24,4 +31,6 @@ export default async function world(k) {
 
     drawTiles(k, map, layer, mapData.tileheight, mapData.tilewidth);
   }
+
+  k.camScale(1);
 }

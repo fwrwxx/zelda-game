@@ -4,6 +4,9 @@ import world from "./scenes/world.js";
 k.loadSprite("assets", "./assets/topdownasset.png", {
   sliceX: 39,
   sliceY: 31,
+  anims: {
+    "player-idle-down": 936,
+  },
 });
 
 const scenes = {
