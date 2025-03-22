@@ -1,9 +1,19 @@
-export function colorizeBackground(k, r, g, b){
-  k.add([
-    k.rect(k.canvas.width, k.canvas.height),
-    k.color(r, g, b),
-    k.fixed(),
-  ]);
+export function playerAnimIfNotPlaying(gameObj, animName) {
+  if (gameObj.curAnim() !== animName) gameObj.play(animName);
+}
+
+export function areAnyOfTheseKeysDown(k, keys) {
+  for (const key of keys) {
+    if (k.isKeyDown(key)) {
+      return true;
+    }
+
+    return false;
+  }
+}
+
+export function colorizeBackground(k, r, g, b) {
+  k.add([k.rect(k.canvas.width, k.canvas.height), k.color(r, g, b), k.fixed()]);
 }
 
 export async function fetchMapData(mapPath) {
@@ -26,7 +36,7 @@ export function drawTiles(k, map, layer, tileheight, tilewidth) {
     if (tile === 0) continue;
 
     map.add([
-      k.sprite("assets", { frame: tile - 1 }),
+      k.sprite('assets', { frame: tile - 1 }),
       k.pos(tilePos),
       k.offscreen(),
     ]);
@@ -45,6 +55,14 @@ export function generateColliderBoxComponents(k, width, height, pos, tag) {
 
 export function drawBoundaries(k, map, layer) {
   for (const object of layer.objects) {
-    map.add(generateColliderBoxComponents(k, object.width, object.height, k.vec2(object.x, object.y + 16), object.name));
+    map.add(
+      generateColliderBoxComponents(
+        k,
+        object.width,
+        object.height,
+        k.vec2(object.x, object.y + 16),
+        object.name,
+      ),
+    );
   }
 }
