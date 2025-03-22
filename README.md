@@ -9,5 +9,5 @@ This project is made as a mini web-game inspired by **Legend of Zelda**. As a pl
 
 ## Technologies Used
 - HTML
-- JavaScript
-- Tiled with Kaboom.js
+- JavaScript with Kaboom.js
+- Tiled
