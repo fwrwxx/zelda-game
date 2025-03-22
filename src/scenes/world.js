@@ -2,7 +2,7 @@ import {
   generatePlayerComponents,
   setPlayerMovement,
 } from '../entities/player.js';
-import { generateSlimeComponents } from '../entities/slime.js';
+import { generateSlimeComponents, setSlimeAI } from '../entities/slime.js';
 import {
   colorizeBackground,
   drawBoundaries,
@@ -67,4 +67,8 @@ export default async function world(k) {
   });
 
   setPlayerMovement(k, entities.player);
+
+  for (const slime of entities.slimes) {
+    setSlimeAI(k, slime);
+  }
 }
