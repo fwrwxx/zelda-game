@@ -1,5 +1,6 @@
 import k from './kaboomContext.js';
 import world from './scenes/world.js';
+import house from './scenes/house.js';
 
 k.loadSprite('assets', './assets/topdownasset.png', {
   sliceX: 39,
@@ -42,6 +43,7 @@ k.loadSprite('assets', './assets/topdownasset.png', {
 
 const scenes = {
   world,
+  house,
 };
 
 for (const scene in scenes) {

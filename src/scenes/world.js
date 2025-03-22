@@ -71,4 +71,8 @@ export default async function world(k) {
   for (const slime of entities.slimes) {
     setSlimeAI(k, slime);
   }
+
+  entities.player.onCollide('door-enterance', () => {
+    k.go('house');
+  });
 }
