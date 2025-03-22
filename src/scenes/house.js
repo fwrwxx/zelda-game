@@ -51,5 +51,10 @@ export default async function house(k) {
   }
 
   k.camScale(4);
-  
+
+  setPlayerMovement(k, entities.player);
+
+  entities.player.onCollide('door-exit', () => {
+    k.go('world');
+  });
 }
