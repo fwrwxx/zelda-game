@@ -8,6 +8,11 @@ import {
   drawTiles,
   fetchMapData,
 } from '../utils.js';
+import {
+  endInteraction,
+  generateOldManComponents,
+  startInteraction,
+} from '../entities/oldman.js';
 
 export default async function house(k) {
   colorizeBackground(k, 27, 29, 52);
