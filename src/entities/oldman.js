@@ -1,3 +1,5 @@
+import { playAnimIfNotPlaying } from '../utils.js';
+
 export function generateOldManComponents(k, pos) {
   return [
     k.sprite('assets', {
@@ -11,4 +13,18 @@ export function generateOldManComponents(k, pos) {
   ];
 }
 
+export async function startIneraction(k, oldman, play) {
+  if (player.direction === 'left') {
+    oldman.flipX = true;
+    playAnimIfNotPlaying(oldman, 'oldman-side');
+  }
 
+  if (player.direction === 'right') {
+    oldman.flipX = true;
+    playAnimIfNotPlaying(oldman, 'oldman-side');
+  }
+
+  if (player.direction === 'down') {
+    playAnimIfNotPlaying(oldman, 'oldman-side');
+  }
+}

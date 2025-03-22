@@ -7,6 +7,7 @@ import {
   drawBoundaries,
   drawTiles,
   fetchMapData,
+  playAnimIfNotPlaying,
 } from '../utils.js';
 import {
   endInteraction,
@@ -61,5 +62,13 @@ export default async function house(k) {
 
   entities.player.onCollide('door-exit', () => {
     k.go('world');
+  });
+
+  entities.player.onCollide('oldman', (oldman) => {
+    startInteraction(k, entities.oldman, entities.player);
+  });
+
+  entities.player.onCollide('oldman', () => {
+    playAnimIfNotPlaying(entities.oldman, 'oldman-down');
   });
 }
