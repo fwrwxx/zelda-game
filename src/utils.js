@@ -1,4 +1,4 @@
-export function playerAnimIfNotPlaying(gameObj, animName) {
+export function playAnimIfNotPlaying(gameObj, animName) {
   if (gameObj.curAnim() !== animName) gameObj.play(animName);
 }
 

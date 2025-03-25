@@ -1,4 +1,6 @@
+import oldmanLines from '../content/oldmanDialogue.js';
 import { playAnimIfNotPlaying } from '../utils.js';
+import { dialog } from '../ui-components/dialog.js';
 
 export function generateOldManComponents(k, pos) {
   return [
@@ -13,7 +15,7 @@ export function generateOldManComponents(k, pos) {
   ];
 }
 
-export async function startIneraction(k, oldman, play) {
+export async function startInteraction(k, oldman, player) {
   if (player.direction === 'left') {
     oldman.flipX = true;
     playAnimIfNotPlaying(oldman, 'oldman-side');
@@ -27,4 +29,8 @@ export async function startIneraction(k, oldman, play) {
   if (player.direction === 'down') {
     playAnimIfNotPlaying(oldman, 'oldman-side');
   }
+
+  const responses = oldmanLines.english;
+
+  dialog(k, k.vec2(250, 500), responses[0]);
 }

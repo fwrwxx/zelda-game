@@ -2,6 +2,7 @@ import k from './kaboomContext.js';
 import world from './scenes/world.js';
 import house from './scenes/house.js';
 
+k.loadFont('gameboy', './assets/gb.ttf');
 k.loadSprite('assets', './assets/topdownasset.png', {
   sliceX: 39,
   sliceY: 31,
