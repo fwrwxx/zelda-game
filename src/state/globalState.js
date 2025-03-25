@@ -21,10 +21,10 @@ export default function globalStatemanager() {
       },
       setlocal(value) {
         local = value;
-      }
+      },
       getLocal() {
         return local;
-      }
+      },
     };
   }
 
