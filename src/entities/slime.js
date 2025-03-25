@@ -1,4 +1,4 @@
-import { playerAnimIfNotPlaying } from '../utils.js';
+import { playAnimIfNotPlaying } from '../utils.js';
 
 const directionalStates = ['left', 'right', 'up', 'down'];
 
@@ -50,7 +50,7 @@ export function setSlimeAI(k, slime) {
 
   const right = slime.onStateEnter('right', async () => {
     slime.flipX = false;
-    playerAnimIfNotPlaying(slime, 'slime-side');
+    playAnimIfNotPlaying(slime, 'slime-side');
     await k.wait(3);
 
     if (slime.getCollisions().length > 0) {

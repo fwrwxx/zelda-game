@@ -1,5 +1,6 @@
 import oldmanLines from '../content/oldmanDialogue.js';
 import { playAnimIfNotPlaying } from '../utils.js';
+import { gameState, oldmanState } from '../state/stateManager.js';
 import { dialog } from '../ui-components/dialog.js';
 
 export function generateOldManComponents(k, pos) {
@@ -30,7 +31,18 @@ export async function startInteraction(k, oldman, player) {
     playAnimIfNotPlaying(oldman, 'oldman-side');
   }
 
-  const responses = oldmanLines.english;
+  const responses = oldmanLines[gameState.getLocal()];
+
+  let nbTalkedOldMan = oldmanState.getNbTalkedOldman();
+  if (nbTalkedOldMan > responses.length - 2) {
+    oldmanState.setNbTalkedOldMan(1);
+    nbTalkedOldMan = oldmanState.getNbTalkedOldMan();
+  }
+
+  if (responses[nbTalkedOldMan]) {
+    dialog(k, k.vec2(250, 500), responses[nbTalkedOldMan]);
+    oldmanState.setNbTalkedOldMan(nbTalkedOldMan + 1);
+  }
 
   dialog(k, k.vec2(250, 500), responses[0]);
 }

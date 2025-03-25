@@ -3,6 +3,7 @@ export default function globalStatemanager() {
 
   function createInstance() {
     let freezePlayer = false;
+    let local = 'english';
     let fontSize = 28;
 
     return {
@@ -18,6 +19,12 @@ export default function globalStatemanager() {
       getFontSize() {
         return fontSize;
       },
+      setlocal(value) {
+        local = value;
+      }
+      getLocal() {
+        return local;
+      }
     };
   }
 
