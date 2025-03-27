@@ -1,4 +1,4 @@
-import { gameState, playerState } from '../state/stateManager.js';
+import { gameState, playerState } from '../state/state-manager.js';
 import { areAnyOfTheseKeysDown, playAnimIfNotPlaying } from '../utils.js';
 
 export function generatePlayerComponents(k, pos) {
@@ -20,8 +20,6 @@ export function generatePlayerComponents(k, pos) {
   ];
 }
 
-
-
 export function setPlayerMovement(k, player) {
   k.onKeyDown((key) => {
     if (gameState.getFreezePlayer()) return;
@@ -34,6 +32,7 @@ export function setPlayerMovement(k, player) {
       playAnimIfNotPlaying(player, 'player-side');
       player.move(-player.speed, 0);
       player.direction = 'left';
+
       return;
     }
 
@@ -45,6 +44,7 @@ export function setPlayerMovement(k, player) {
       playAnimIfNotPlaying(player, 'player-side');
       player.move(player.speed, 0);
       player.direction = 'right';
+
       return;
     }
 
@@ -52,6 +52,7 @@ export function setPlayerMovement(k, player) {
       playAnimIfNotPlaying(player, 'player-up');
       player.move(0, -player.speed);
       player.direction = 'up';
+
       return;
     }
 
@@ -59,6 +60,7 @@ export function setPlayerMovement(k, player) {
       playAnimIfNotPlaying(player, 'player-down');
       player.move(0, player.speed);
       player.direction = 'down';
+
       return;
     }
   });

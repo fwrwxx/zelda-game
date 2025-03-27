@@ -1,6 +1,6 @@
-import oldmanLines from '../content/oldmanDialogue.js';
+import oldmanLines from '../content/oldman-dialogue.js';
 import { playAnimIfNotPlaying } from '../utils.js';
-import { gameState, oldmanState, playerState } from '../state/stateManager.js';
+import { gameState, oldmanState, playerState } from '../state/state-manager.js';
 import { dialog } from '../ui-components/dialog.js';
 
 export function generateOldManComponents(k, pos) {

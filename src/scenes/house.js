@@ -14,6 +14,7 @@ import {
   startInteraction,
 } from '../entities/oldman.js';
 import { healthBar } from '../ui-components/healthbar.js';
+import { gameState } from '../state/state-manager.js';
 
 export default async function house(k) {
   colorizeBackground(k, 27, 29, 52);
@@ -61,10 +62,11 @@ export default async function house(k) {
   setPlayerMovement(k, entities.player);
 
   entities.player.onCollide('door-exit', () => {
+    gameState.setPreviousScene('house');
     k.go('world');
   });
 
-  entities.player.onCollide('oldman', (oldman) => {
+  entities.player.onCollide('oldman', () => {
     startInteraction(k, entities.oldman, entities.player);
   });
 

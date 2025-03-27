@@ -1,4 +1,4 @@
-import { playerState } from './state/stateManager.js';
+import { playerState } from './state/state-manager.js';
 import { healthBar } from './ui-components/healthbar.js';
 
 export function playAnimIfNotPlaying(gameObj, animName) {
@@ -78,6 +78,7 @@ export async function blinkEffect(k, entity) {
     (val) => (entity.opacity = val),
     k.easings.linear,
   );
+
   await k.tween(
     entity.opacity,
     1,

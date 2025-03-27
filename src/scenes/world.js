@@ -4,6 +4,7 @@ import {
 } from '../entities/player.js';
 import { generateSlimeComponents, setSlimeAI } from '../entities/slime.js';
 import { healthBar } from '../ui-components/healthbar.js';
+import { gameState } from '../state/stateManagers.js';
 import {
   colorizeBackground,
   drawBoundaries,
@@ -14,10 +15,9 @@ import {
 } from '../utils.js';
 
 export default async function world(k) {
+  const previousScene = gameState.getPreviousScene();
   colorizeBackground(k, 76, 170, 255);
   const mapData = await fetchMapData('./assets/maps/world.json');
-  console.log(mapData);
-
   const map = k.add([k.pos(0, 0)]);
 
   const entities = {
@@ -29,15 +29,25 @@ export default async function world(k) {
   for (const layer of layers) {
     if (layer.name === 'boundaries') {
       drawBoundaries(k, map, layer);
+
       continue;
     }
 
     if (layer.name === 'spawn-points') {
       for (const object of layer.objects) {
-        if (object.name === 'player') {
+        if (object.name === 'player-dungeon' && previousScene === 'dungeon') {
           entities.player = map.add(
             generatePlayerComponents(k, k.vec2(object.x, object.y)),
           );
+
+          continue;
+        }
+
+        if (object.name === 'player' && previousScene !== 'dungeon') {
+          entities.player = map.add(
+            generatePlayerComponents(k, k.vec2(object.x, object.y)),
+          );
+
           continue;
         }
 
@@ -47,6 +57,7 @@ export default async function world(k) {
           );
         }
       }
+
       continue;
     }
 
@@ -77,9 +88,10 @@ export default async function world(k) {
     onCollideWithPlayer(k, slime);
   }
 
-  entities.player.onCollide('door-enterance', () => {
+  entities.player.onCollide('door-entrance', () => {
     k.go('house');
   });
+  entities.player.onCollide('dungeon-door-entrance', () => k.go('dungeon'));
 
   healthBar(k);
 }

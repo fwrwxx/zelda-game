@@ -1,4 +1,4 @@
-import { gameState } from '../state/stateManager.js';
+import { gameState } from '../state/state-manager.js';
 
 async function displayLine(textContainer, line) {
   for (const char of line) {
@@ -31,6 +31,7 @@ export async function dialog(k, pos, content) {
 
   await displayLine(textContainer, content[index]);
   let lineFinishedDisplaying = true;
+
   const dialogKey = k.onKeyDown('space', async () => {
     if (!lineFinishedDisplaying) return;
 

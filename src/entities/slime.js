@@ -93,6 +93,7 @@ export function setSlimeAI(k, slime) {
 
     if (slime.getCollisions().length > 0) {
       slime.enterState('idle');
+
       return;
     }
 
