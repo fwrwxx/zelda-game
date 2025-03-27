@@ -1,4 +1,6 @@
 import { playerState } from './state/stateManager.js';
+import { healthBar } from './ui-components/healthbar.js';
+
 export function playAnimIfNotPlaying(gameObj, animName) {
   if (gameObj.curAnim() !== animName) gameObj.play(animName);
 }
@@ -103,7 +105,7 @@ export function onCollideWithPlayer(k, entity) {
     if (player.isAttacking) return;
 
     playerState.setHealth(playerState.getHealth() - entity.attackPower);
-    k.destroyAll('healthContainer');
+    k.destroyAll('heartsContainer');
 
     healthBar(k, player);
     await blinkEffect(k, player);

@@ -10,10 +10,10 @@ import {
   playAnimIfNotPlaying,
 } from '../utils.js';
 import {
-  endInteraction,
   generateOldManComponents,
   startInteraction,
 } from '../entities/oldman.js';
+import { healthBar } from '../ui-components/healthbar.js';
 
 export default async function house(k) {
   colorizeBackground(k, 27, 29, 52);
@@ -71,4 +71,6 @@ export default async function house(k) {
   entities.player.onCollide('oldman', () => {
     playAnimIfNotPlaying(entities.oldman, 'oldman-down');
   });
+
+  healthBar(k);
 }
