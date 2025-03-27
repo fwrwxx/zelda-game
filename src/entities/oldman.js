@@ -35,6 +35,11 @@ export async function startInteraction(k, oldman, player) {
 
   const responses = oldmanLines[gameState.getLocal()];
 
+  if (gameState.getIsSonSaved()) {
+    await dialog(k, k.vec2(250, 500), responses[3]);
+    return;
+  }
+
   let nbTalkedOldMan = oldmanState.getNbTalkedOldman();
   if (nbTalkedOldMan > responses.length - 2) {
     oldmanState.setNbTalkedOldMan(1);
@@ -42,9 +47,13 @@ export async function startInteraction(k, oldman, player) {
   }
 
   if (responses[nbTalkedOldMan]) {
-    dialog(k, k.vec2(250, 500), responses[nbTalkedOldMan]);
+    await dialog(k, k.vec2(250, 500), responses[nbTalkedOldMan]);
     oldmanState.setNbTalkedOldMan(nbTalkedOldMan + 1);
-  }
 
-  dialog(k, k.vec2(250, 500), responses[0]);
+    return;
+  }
+}
+
+export function endInteraction(oldman) {
+  playAnimIfNotPlaying(oldman, 'oldman-down');
 }

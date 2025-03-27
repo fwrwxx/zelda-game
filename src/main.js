@@ -2,6 +2,7 @@ import k from './kaboom-context.js';
 import world from './scenes/world.js';
 import house from './scenes/house.js';
 import dungeon from './scenes/dungeon.js';
+import mainMenu from './scenes/main-menu.js';
 
 k.loadFont('gameboy', './assets/gb.ttf');
 k.loadSprite('assets', './assets/topdownasset.png', {
@@ -68,10 +69,11 @@ const scenes = {
   world,
   house,
   dungeon,
+  mainMenu,
 };
 
 for (const scene in scenes) {
   k.scene(scene, () => scenes[scene](k));
 }
 
-k.go('world');
+k.go('mainMenu');
