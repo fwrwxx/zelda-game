@@ -1,7 +1,7 @@
 # ⚔️ Adventure Game based on Legend of Zelda
 💡 *Created by: Shtyfliuk Olha*
 
-🕹️ *Play the game online: [link]*
+🕹️ *Clone the repo to play The Legend of Zelda*
 
 ## 📝 Description
 This project is made as a **2D mini-game** inspired by **Legend of Zelda**. As a player you will explore the **fantasy world**, battle **fierce enemies** and uncover **hidden secrets**. Prepare for your new journey!
