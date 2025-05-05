@@ -1,19 +1,19 @@
 import { playAnimIfNotPlaying } from '../utils.js';
 
 const directionalStates = ['left', 'right', 'up', 'down'];
-
 export function generateSlimeComponents(k, pos) {
   return [
-    k.sprite('assets', {
-      anim: 'slime-idle-down',
+    k.sprite('assets', { frame: 858 }),
+    k.area({
+      shape: new k.Rect(k.vec2(0, 4), 16, 10),
+      collisionIgnore: ['slime'],
     }),
-    k.sprite({ shape: new k.Rect(k.vec2(0, 6), 16, 10) }),
     k.body(),
     k.pos(pos),
     k.offscreen(),
-    k.opacity(),
     k.state('idle', ['idle', ...directionalStates]),
     k.health(3),
+    k.opacity(),
     {
       speed: 30,
       attackPower: 0.5,
@@ -22,12 +22,24 @@ export function generateSlimeComponents(k, pos) {
   ];
 }
 
+async function move(k, entity, isHorizontal, moveBy, duration) {
+  await entity.tween(
+    isHorizontal ? entity.pos.x : entity.pos.y,
+    isHorizontal ? entity.pos.x + moveBy : entity.pos.y + moveBy,
+    duration,
+    (val) => {
+      isHorizontal ? (entity.pos.x = val) : (entity.pos.y = val);
+    },
+    k.easings.linear,
+  );
+}
+
 export function setSlimeAI(k, slime) {
   k.onUpdate(() => {
     switch (slime.state) {
       case 'right':
         slime.move(slime.speed, 0);
-        breake;
+        break;
       case 'left':
         slime.move(-slime.speed, 0);
         break;
@@ -93,7 +105,6 @@ export function setSlimeAI(k, slime) {
 
     if (slime.getCollisions().length > 0) {
       slime.enterState('idle');
-
       return;
     }
 

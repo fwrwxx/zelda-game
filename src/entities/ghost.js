@@ -23,6 +23,7 @@ export function setGhostAI(k, ghost, player) {
     if (player.pos.dist(ghost.pos) < 30) {
       ghost.enterState('backtrack');
       updateRef.cancel();
+      return;
     }
   });
 
@@ -68,7 +69,6 @@ export function setGhostAI(k, ghost, player) {
 
     if (ghost.getCollisions().length > 0) {
       ghost.enterState('evade');
-
       return;
     }
 
@@ -84,7 +84,6 @@ export function setGhostAI(k, ghost, player) {
       (val) => (ghost.pos = val),
       k.easings.linear,
     );
-
     ghost.enterState('attack');
   });
 

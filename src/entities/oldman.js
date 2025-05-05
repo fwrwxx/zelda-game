@@ -1,7 +1,7 @@
-import oldmanLines from '../content/oldman-dialogue.js';
+import { playerState, oldManState, gameState } from '../state/stateManagers.js';
+import { dialog } from '../uiComponents/dialog.js';
 import { playAnimIfNotPlaying } from '../utils.js';
-import { gameState, oldmanState, playerState } from '../state/state-manager.js';
-import { dialog } from '../ui-components/dialog.js';
+import oldmanLines from '../content/oldmanDialogue.js';
 
 export function generateOldManComponents(k, pos) {
   return [
@@ -23,33 +23,34 @@ export async function startInteraction(k, oldman, player) {
   }
 
   if (player.direction === 'right') {
-    oldman.flipX = true;
+    oldman.flipX = false;
     playAnimIfNotPlaying(oldman, 'oldman-side');
   }
 
   if (player.direction === 'down') {
-    playAnimIfNotPlaying(oldman, 'oldman-side');
+    playAnimIfNotPlaying(oldman, 'oldman-up');
   }
 
-  playerState.setIsSwordequipped(true);
+  const locale = gameState.getLocale();
+  const responses = oldmanLines[locale] || oldmanLines['english']; // на випадок, якщо локалізація не знайдена
 
-  const responses = oldmanLines[gameState.getLocal()];
+
+  playerState.setIsSwordEquipped(true);
 
   if (gameState.getIsSonSaved()) {
     await dialog(k, k.vec2(250, 500), responses[3]);
     return;
   }
 
-  let nbTalkedOldMan = oldmanState.getNbTalkedOldman();
+  let nbTalkedOldMan = oldManState.getNbTalkedOldMan();
   if (nbTalkedOldMan > responses.length - 2) {
-    oldmanState.setNbTalkedOldMan(1);
-    nbTalkedOldMan = oldmanState.getNbTalkedOldMan();
+    oldManState.setNbTalkedOldMan(1);
+    nbTalkedOldMan = oldManState.getNbTalkedOldMan();
   }
 
-  if (responses[nbTalkedOldMan]) {
+  if (nbTalkedOldMan < responses.length && responses[nbTalkedOldMan]) {
     await dialog(k, k.vec2(250, 500), responses[nbTalkedOldMan]);
-    oldmanState.setNbTalkedOldMan(nbTalkedOldMan + 1);
-
+    oldManState.setNbTalkedOldMan(nbTalkedOldMan + 1);
     return;
   }
 }
