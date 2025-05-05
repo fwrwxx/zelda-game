@@ -1,14 +1,14 @@
-import k from './kaboom-context.js';
+import k from './kaboomContext.js';
+import mainMenu from './scenes/mainMenu.js';
 import world from './scenes/world.js';
 import house from './scenes/house.js';
 import dungeon from './scenes/dungeon.js';
-import mainMenu from './scenes/main-menu.js';
 
-k.loadFont('gameboy', './assets/gb.ttf');
+k.loadFont('pressstart', 'assets/PressStart2P-Regular.ttf');
 k.loadSprite('assets', './assets/topdownasset.png', {
   sliceX: 39,
   sliceY: 31,
-  anim: {
+  anims: {
     'player-idle-down': 936,
     'player-down': {
       from: 936,
@@ -43,7 +43,6 @@ k.loadSprite('assets', './assets/topdownasset.png', {
     'ghost-down': { from: 862, to: 863, loop: true },
   },
 });
-
 k.loadSpriteAtlas('./assets/topdownasset.png', {
   'full-heart': {
     x: 0,
@@ -71,9 +70,8 @@ const scenes = {
   dungeon,
   mainMenu,
 };
-
-for (const scene in scenes) {
-  k.scene(scene, () => scenes[scene](k));
+for (const sceneName in scenes) {
+  k.scene(sceneName, () => scenes[sceneName](k));
 }
 
 k.go('mainMenu');

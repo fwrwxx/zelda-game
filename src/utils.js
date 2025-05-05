@@ -1,41 +1,37 @@
-import { playerState } from './state/state-manager.js';
-import { healthBar } from './ui-components/healthbar.js';
+import { playerState } from './state/stateManagers.js';
+import { healthBar } from './uiComponents/healthbar.js';
 
 export function playAnimIfNotPlaying(gameObj, animName) {
-  if (gameObj.curAnim() !== animName) gameObj.play(animName);
+  if (gameObj.curAnim() !== animName) {
+    gameObj.play(animName);
+  }
 }
 
 export function areAnyOfTheseKeysDown(k, keys) {
   for (const key of keys) {
-    if (k.isKeyDown(key)) {
-      return true;
-    }
-
-    return false;
+    if (k.isKeyDown(key)) return true;
   }
+
+  return false;
 }
 
 export function colorizeBackground(k, r, g, b) {
   k.add([k.rect(k.canvas.width, k.canvas.height), k.color(r, g, b), k.fixed()]);
 }
 
-export async function fetchMapData(mapPath) {
-  return await (await fetch(mapPath)).json();
-}
-
 export function drawTiles(k, map, layer, tileheight, tilewidth) {
-  let numOfDrawnTiles = 0;
+  let nbOfDrawnTiles = 0;
   const tilePos = k.vec2(0, 0);
-
   for (const tile of layer.data) {
-    if (numOfDrawnTiles % layer.width === 0) {
+    if (nbOfDrawnTiles % layer.width === 0) {
       tilePos.x = 0;
       tilePos.y += tileheight;
     } else {
       tilePos.x += tilewidth;
     }
 
-    numOfDrawnTiles++;
+    nbOfDrawnTiles++;
+
     if (tile === 0) continue;
 
     map.add([
@@ -46,16 +42,6 @@ export function drawTiles(k, map, layer, tileheight, tilewidth) {
   }
 }
 
-export function generateColliderBoxComponents(k, width, height, pos, tag) {
-  return [
-    k.area({ shape: new k.Rect(k.vec2(0), width, height) }),
-    k.pos(pos),
-    k.body({ isStatic: true }),
-    k.offscreen(),
-    tag,
-  ];
-}
-
 export function drawBoundaries(k, map, layer) {
   for (const object of layer.objects) {
     map.add(
@@ -63,11 +49,27 @@ export function drawBoundaries(k, map, layer) {
         k,
         object.width,
         object.height,
-        k.vec2(object.x, object.y + 16),
-        object.name,
+        k.vec2(object.x, object.y),
+        object.name !== '' ? object.name : 'wall',
       ),
     );
   }
+}
+
+export async function fetchMapData(mapPath) {
+  return await (await fetch(mapPath)).json();
+}
+
+export function generateColliderBoxComponents(k, width, height, pos, tag) {
+  return [
+    k.rect(width, height),
+    k.pos(pos.x, pos.y + 16),
+    k.area(),
+    k.body({ isStatic: true }),
+    k.opacity(0),
+    k.offscreen(),
+    tag,
+  ];
 }
 
 export async function blinkEffect(k, entity) {
@@ -78,7 +80,6 @@ export async function blinkEffect(k, entity) {
     (val) => (entity.opacity = val),
     k.easings.linear,
   );
-
   await k.tween(
     entity.opacity,
     1,
@@ -88,7 +89,7 @@ export async function blinkEffect(k, entity) {
   );
 }
 
-export function onAttacked(k, entity, player) {
+export function onAttacked(k, entity) {
   entity.onCollide('swordHitBox', async () => {
     if (entity.isAttacking) return;
 
@@ -97,17 +98,15 @@ export function onAttacked(k, entity, player) {
     }
 
     await blinkEffect(k, entity);
-    entity.hurt(player.attackPower);
+    entity.hurt(1);
   });
 }
 
 export function onCollideWithPlayer(k, entity) {
   entity.onCollide('player', async (player) => {
     if (player.isAttacking) return;
-
     playerState.setHealth(playerState.getHealth() - entity.attackPower);
-    k.destroyAll('heartsContainer');
-
+    k.destroyAll('healthContainer');
     healthBar(k, player);
     await blinkEffect(k, player);
   });
